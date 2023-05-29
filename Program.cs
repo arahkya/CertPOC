@@ -1,20 +1,23 @@
 using Microsoft.AspNetCore.Authentication.Certificate;
-using CertPOC.Extenions;
+using CertPOC.Extensions;
+using CertPOC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.WebHost.ConfigureAzKestrel();
 
 // Add services to the container.
+builder.Services.AddScoped<IAzureCertificateService, AzureCertificateService>();
+builder.Services.AddScoped<IAzureSecretService, AzureSecretService>();
+
 builder.Services.AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme)
      .AddCertificate(CertificateAuthenticationDefaults.AuthenticationScheme, authCertCfg =>
     {
         authCertCfg.AllowedCertificateTypes = CertificateTypes.All;
         authCertCfg.Events = new CertificateAuthenticationEvents
-        {            
+        {
             OnCertificateValidated = context =>
             {
                 return Task.CompletedTask;
-            }            
+            }
         };
     });
 builder.Services.AddAuthorization();
@@ -24,6 +27,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.WebHost.ConfigureAzKestrel(builder.Services, 7212);
 
 var app = builder.Build();
 

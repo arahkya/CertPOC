@@ -14,6 +14,7 @@ public static class SetupKestrel
         {
             kestrelCfg.ConfigureHttpsDefaults(httpDefaultCfg =>
             {
+                httpDefaultCfg.AllowAnyClientCertificate();
                 httpDefaultCfg.ClientCertificateMode = ClientCertificateMode.RequireCertificate;
                 httpDefaultCfg.CheckCertificateRevocation = false;
 
@@ -43,7 +44,7 @@ public static class SetupKestrel
                 httpDefaultCfg.ServerCertificate = serviceProvider.GetRequiredService<IAzureCertificateService>().GetCertificateFromAzureKeyVault(azUri, azClientCred, certName!);
             });
 
-            kestrelCfg.Listen(IPAddress.Loopback, port, listenOpt =>
+            kestrelCfg.Listen(IPAddress.Any, port, listenOpt =>
             {
                 listenOpt.UseHttps();
             });

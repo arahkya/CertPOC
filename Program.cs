@@ -10,7 +10,7 @@ builder.Services.AddScoped<IAzureSecretService, AzureSecretService>();
 
 builder.Services.AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme)
      .AddCertificate(CertificateAuthenticationDefaults.AuthenticationScheme, authCertCfg =>
-    {
+    {        
         authCertCfg.AllowedCertificateTypes = CertificateTypes.All;
         authCertCfg.Events = new CertificateAuthenticationEvents
         {

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: "2023-06-01T03:47:23Z"
+  labels:
+    kubernetes.io/metadata.name: ddr-payment
+  name: ddr-payment
+  resourceVersion: "798352"
+  uid: 538b6a17-f920-41f7-9a2d-7a8136824e9c
+spec:
+  finalizers:
+  - kubernetes
+status:
+  phase: Active

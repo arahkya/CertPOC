@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ddrpayment-deployment
+  namespace: ddr-payment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ddrpayment-deployment
+  template:
+    metadata:
+      labels:
+        app: ddrpayment-deployment
+    spec:
+      containers:
+      - name: ddrpayment-deployment
+        image: ddrpayment.modernapp.bbl:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 7212
+        env:
+        - name: "ASPNETCORE_ENVIRONMENT"
+          value: "Container"
+        - name: "ASPNETCORE_AZ_TENENT"
+          value: "e227966e-75d6-4534-9c51-67d014c1ad2c"
+        - name: "ASPNETCORE_AZ_KV_URI"
+          value: "https://ddrpayment.vault.azure.net/"
+        - name: "ASPNETCORE_AZ_KV_CERT_NAME"
+          value: "Development"
+        - name: "ASPNETCORE_AZ_CLIENT_ID"
+          value: "b22f5760-8911-4611-aec3-8a93fd673dd0"
+        - name: "ASPNETCORE_AZ_CLIENT_SECRET"
+          value: "yKi8Q~ukIWSWgGFf8kEgmcmH.sYVQiNgTvaG2b~5"

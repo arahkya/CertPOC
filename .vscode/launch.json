@@ -21,7 +21,7 @@
             },
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
-                "ASPNETCORE_SSL_LOCAL": "false"                
+                "ASPNETCORE_SSL_LOCAL": "false"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"

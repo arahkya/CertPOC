@@ -8,9 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IAzureCertificateService, AzureCertificateService>();
 builder.Services.AddScoped<IAzureSecretService, AzureSecretService>();
 
-builder.Services.AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme)
-     .AddCertificate(CertificateAuthenticationDefaults.AuthenticationScheme, authCertCfg =>
-    {        
+builder.Services
+    .AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme)
+    .AddCertificate(CertificateAuthenticationDefaults.AuthenticationScheme, authCertCfg =>
+    {
         authCertCfg.AllowedCertificateTypes = CertificateTypes.All;
         authCertCfg.Events = new CertificateAuthenticationEvents
         {
@@ -32,7 +33,7 @@ builder.WebHost.ConfigureAzKestrel(builder.Services, 7212);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName.ToLower() == "container")
 {
     app.UseSwagger();
     app.UseSwaggerUI();
